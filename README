@@ -1,0 +1,7 @@
+SmartDuplex: a simple bidirectional payment channel in Solidity
+=====
+
+
+Similar to Hearn's channels, Poon-Dryja (Lightning) channels, Decker-Wattenhofer (DMC) channels, and Raiden.
+
+- Compared to Poon-Dryja channe

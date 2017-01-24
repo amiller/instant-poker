@@ -10,6 +10,8 @@ contract SmartDuplex {
     int net;
     uint[2] balances;
 
+    uint lastPlayer; // For selfdestruct
+
     // Can only be incremented by deposit() function
     uint[2] public deposits;
 
@@ -72,10 +74,18 @@ contract SmartDuplex {
 
 	// After finalizing, can withdraw deposit+net
 	else {
-	    // positive net: Alice gets money
-	    int net2 = (i == 0) ? net : -net;
-	    var finalBalance = uint(int(deposits[i]) + net2);
-	    toWithdraw = finalBalance - withdrawn[i];
+	    if (0 == lastPlayer) {
+	        lastPlayer = 3 - playermap[msg.sender];
+	        // positive net: Alice gets money
+	        int net2 = (i == 0) ? net : -net;
+	        var finalBalance = uint(int(deposits[i]) + net2);
+	        toWithdraw = finalBalance - withdrawn[i];
+            }
+            else {
+                // last player withdraws the entire remaining amount
+                assert(playermap[msg.sender] == lastPlayer);
+                selfdestruct(msg.sender);
+            }
 	}
 	
 	withdrawn[i] = toWithdraw;

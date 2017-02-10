@@ -61,6 +61,7 @@ class Player():
         assert not self.isTriggered
         assert r == self.lastOpenRound == self.lastClosedRound + 1
         # Signatures received, we can broadcast our share
+        # TODO: check each signature
         self.sigs = sigs
         broadcastCommitment(self, r, self.m)
         return self.m
